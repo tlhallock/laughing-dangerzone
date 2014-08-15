@@ -46,14 +46,21 @@ RunResult run_system_cmd(const std::stringstream &stream, bool need_output)
 
 RunResult run_system_cmd(const std::string &str, bool need_output)
 {
-	std::string output_file = get_config().get_tmp_cmd_file();
-	get_logger().log_line("Saving cmd to '" + output_file + "': " + str, INFO);
-	cccfg::ensure_directory_for_file(output_file);
+	std::string cmd_file = get_config().get_tmp_cmd_file();
+	get_logger().log_line("Saving cmd to '" + cmd_file + "': " + str, INFO);
+	cccfg::ensure_directory_for_file(cmd_file);
+
+	{
+		std::ofstream c{cmd_file};
+		c << str << std::endl;
+	}
+
+	cmd_file += ".output";
 
 	int status_code;
 	{
-		char *cmd = (char *) alloca (10 + str.size() + 2 * output_file.size());
-		sprintf(cmd, "%s 2>%s 1>%s", str.c_str(), output_file.c_str(), output_file.c_str());
+		char *cmd = (char *) alloca (10 + str.size() + 2 * cmd_file.size());
+		sprintf(cmd, "%s 2>%s 1>%s", str.c_str(), cmd_file.c_str(), cmd_file.c_str());
 		status_code = system(cmd);
 	}
 
@@ -61,7 +68,7 @@ RunResult run_system_cmd(const std::string &str, bool need_output)
 	if (need_output)
 	{
 		std::stringstream buffer;
-		std::ifstream in_file(output_file);
+		std::ifstream in_file(cmd_file);
 		std::string line;
 		while (std::getline(in_file, line))
 		{

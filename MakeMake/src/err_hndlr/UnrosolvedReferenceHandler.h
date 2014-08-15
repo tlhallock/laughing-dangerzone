@@ -12,11 +12,11 @@
 
 namespace cccfg {
 
-class UnrosolvedReferenceHandler : public RegexHandler
+class UnresolvedReferenceHandler : public RegexHandler
 {
 public:
-	UnrosolvedReferenceHandler();
-	virtual ~UnrosolvedReferenceHandler();
+	UnresolvedReferenceHandler();
+	virtual ~UnresolvedReferenceHandler();
 
 	bool applies(compile_stage stage);
 	bool apply_match(const std::string &match, Cmd &cmd, FileSet &files);

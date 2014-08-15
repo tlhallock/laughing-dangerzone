@@ -31,7 +31,7 @@ ErrorParser::ErrorParser()
 {
 	handlers.push_back(new MissingIncludeHandler);
 	handlers.push_back(new UndefinedSymbolHandler);
-	handlers.push_back(new UnrosolvedReferenceHandler);
+	handlers.push_back(new UnresolvedReferenceHandler);
 }
 
 ErrorParser::~ErrorParser()

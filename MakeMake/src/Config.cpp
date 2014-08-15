@@ -25,7 +25,7 @@ static int next_cmd;
 const std::string Config::get_tmp_cmd_file() const
 {
 	char file[256];
-	sprintf(file, "./cccfg/cmds/output.%d.txt", next_cmd++);
+	sprintf(file, "./cccfg/cmds/cmd.%d.txt", next_cmd++);
 	return std::string(file);
 }
 
