@@ -14,7 +14,7 @@
 namespace cccfg
 {
 
-Logger::Logger() : output("log.txt") {}
+Logger::Logger() : output("./cccfg/log.txt") {}
 Logger::~Logger() {}
 
 void Logger::log_line(const std::string &line, log_level level)
