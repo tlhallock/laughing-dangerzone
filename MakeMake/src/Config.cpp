@@ -25,7 +25,7 @@ static int next_cmd;
 const std::string Config::get_tmp_cmd_file() const
 {
 	char file[256];
-	sprintf(file, "./cmds/scratch.%d.txt", next_cmd++);
+	sprintf(file, "./cccfg/cmds/output.%d.txt", next_cmd++);
 	return std::string(file);
 }
 
@@ -36,17 +36,17 @@ const std::string Config::get_compile_cmd() const
 
 log_level Config::get_log_level() const
 {
-	return cccfg::DEBUG;
+	return DEBUG;
 }
 
 const std::string Config::get_object_directory() const
 {
-	return "./objects";
+	return "./cccfg/objects/";
 }
 
 const std::string Config::get_library_file() const
 {
-	return "static_library.a";
+	return "/cccfg/static_library.a";
 }
 
 const std::string Config::get_link_cmd() const
@@ -59,7 +59,7 @@ static long exe_num;
 const std::string Config::get_exe_name(const std::string& source) const
 {
 	std::stringstream s;
-	s << "./output/";
+	s << "./cccfg/output/";
 	s << source.substr(source.find_last_of("/") + 1, source.find_last_of("."));
 	s << ".";
 	s << exe_num++;
