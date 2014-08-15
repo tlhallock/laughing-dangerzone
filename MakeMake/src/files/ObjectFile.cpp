@@ -21,12 +21,16 @@ void ObjectFile::add_to_fileset(FileSet& fileset) { fileset.add_object(this); }
 
 void ObjectFile::add_to_cmd(compile_stage stage, Cmd& cmd)
 {
+	std::string outpath;
+
 	switch (stage)
 	{
+	case MAKE_EXES:
+		outpath = get_config().get_exe_name(get_path());
+		ensure_directory_for_file(outpath);
+		cmd.add_output(outpath);
 	case STATIC_LINK:
 	case SO_LINK:
-	case MAKE_EXES:
-		cmd.add_output(get_config().get_exe_name(get_path()));
 		cmd.add_object(this);
 		break;
 	default:

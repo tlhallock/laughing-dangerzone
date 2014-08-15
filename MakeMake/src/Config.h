@@ -37,9 +37,8 @@ public:
 	log_level get_log_level() const;
 
 	void set_compiler_prefix(const std::string prefix);
-
-
-	void add_global_option(const std::string &key, const std::string &value);
+	void add_global_compiler_option(const std::string& option);
+	const std::set<std::string>& get_global_compiler_options();
 
 	const std::set<std::string> &get_source_extensions() const;
 	const std::set<std::string> &get_library_extensions() const;
@@ -47,6 +46,7 @@ public:
 
 private:
 	std::string compiler_prefix;
+	std::set<std::string> global_compiler_options;
 };
 
 

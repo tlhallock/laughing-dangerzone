@@ -13,6 +13,7 @@
 #include "files/ObjectFile.h"
 
 #include "Logger.h"
+#include "Config.h"
 
 #include <sstream>
 
@@ -21,7 +22,6 @@ namespace cccfg
 {
 
 Cmd::Cmd(const std::string& c) : cmd(c) {}
-
 Cmd::~Cmd() {}
 
 std::string Cmd::to_string() const
@@ -100,6 +100,33 @@ bool Cmd::has_content() const
 {
 	return to_string().size() != 0;
 }
+
+Cmd create_compile_cmd()
+{
+	Cmd cmd{get_config().get_compile_cmd()};
+
+	auto end = get_config().get_global_compiler_options().end();
+	for (auto it = get_config().get_global_compiler_options().begin(); it != end; ++it)
+	{
+		cmd.add_option(*it);
+	}
+
+	return cmd;
+}
+
+Cmd create_solink_cmd()
+{
+	std::cout << "Not yet supported." << std::endl;
+	exit(-1);
+//	return Cmd{get_config().get_link_cmd()};
+}
+
+Cmd create_archive_cmd()
+{
+	return Cmd{get_config().get_link_cmd()};
+}
+
+
 
 
 }

@@ -99,12 +99,12 @@ std::string MissingIncludeHandler::find_include_path(std::string include, FileSe
 	}
 
 	Decision *d = get_history().create_decision("Missing include: " + include);
-	std::unique_ptr<Decision> dptr(d);
+	std::unique_ptr<Decision> dptr{d};
 
 	auto aend = header_files.end();
 	for (auto it = header_files.begin(); it != aend; ++it)
 	{
-		d->add_option(new Option("Include header file at path '" + it->first->get_path() + "'.", it->second));
+		d->add_option(new Option{"Include header file at path '" + it->first->get_path() + "'.", it->second});
 	}
 
 	Option *o = d->decide();

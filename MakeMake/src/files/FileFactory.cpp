@@ -27,46 +27,46 @@ namespace
 		class SourceFileFactory : public FileFactory
 		{
 		public:
-			SourceFileFactory() : FileFactory(get_config().get_source_extensions()) {}
+			SourceFileFactory() : FileFactory{get_config().get_source_extensions()} {}
 			~SourceFileFactory() {}
 
-			File *create_file(const std::string &path) const { return new SourceFile(path); }
+			File *create_file(const std::string &path) const { return new SourceFile{path}; }
 		};
 
 		class HeaderFileFactory : public FileFactory
 		{
 		public:
-			HeaderFileFactory() : FileFactory(get_config().get_header_extensions()) {}
+			HeaderFileFactory() : FileFactory{get_config().get_header_extensions()} {}
 			~HeaderFileFactory() {}
 
-			File *create_file(const std::string &path) const { return new HeaderFile(path); }
+			File *create_file(const std::string &path) const { return new HeaderFile{path}; }
 		};
 
 		class ArchiveFileFactory : public FileFactory
 		{
 		public:
-			ArchiveFileFactory() : FileFactory(".a") {}
+			ArchiveFileFactory() : FileFactory{".a"} {}
 			~ArchiveFileFactory() {}
 
-			File *create_file(const std::string &path) const { return new ArchiveFile(path); }
+			File *create_file(const std::string &path) const { return new ArchiveFile{path}; }
 		};
 
 		class SharedFileFactory : public FileFactory
 		{
 		public:
-			SharedFileFactory() : FileFactory(".so") {}
+			SharedFileFactory() : FileFactory{".so"} {}
 			~SharedFileFactory() {}
 
-			File *create_file(const std::string &path) const { return new SharedObjectFile(path); }
+			File *create_file(const std::string &path) const { return new SharedObjectFile{path}; }
 		};
 
 		class ObjectFileFactory : public FileFactory
 		{
 		public:
-			ObjectFileFactory() : FileFactory(".o") {}
+			ObjectFileFactory() : FileFactory{".o"} {}
 			~ObjectFileFactory() {}
 
-			File *create_file(const std::string &path) const { return new ObjectFile(path); }
+			File *create_file(const std::string &path) const { return new ObjectFile{path}; }
 		};
 
 		static std::vector<const FileFactory *> factories;
@@ -153,7 +153,7 @@ const std::set<std::string>& FileFactory::get_extensions() const
 
 bool str_ends_with(const std::string &long_string, const std::string &suffix)
 {
-	auto start = long_string.size() - suffix.size();
+	int start = (int) long_string.size() - (int) suffix.size();
 	if (start <= 0)
 	{
 		return false;

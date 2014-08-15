@@ -21,7 +21,7 @@ namespace
 	class UserDefine : public Option
 	{
 	public:
-		UserDefine() : Option("Define the value yourself.", "") {}
+		UserDefine() : Option{"Define the value yourself.", ""} {}
 		~UserDefine() {}
 
 		void selected()
@@ -54,12 +54,12 @@ bool UndefinedSymbolHandler::apply_match(const std::string &symbol, Cmd& cmd, Fi
 	get_logger().log_line("Found missing symbol: '" + symbol + "'", INFO);
 
 	Decision *d = get_history().create_decision("Undefined symbol: '" + symbol + "'");
-	std::unique_ptr<Decision> dptr(d);
+	std::unique_ptr<Decision> dptr{d};
 
 	d->add_option(new UserDefine);
-	d->add_option(new Option("Define as '\"" + symbol + "\"'", "\"" + symbol + "\""));
-	d->add_option(new Option("Define as 0", "0"));
-	d->add_option(new Option("Define as 1", "1"));
+	d->add_option(new Option{"Define as '\"" + symbol + "\"'", "\"" + symbol + "\""});
+	d->add_option(new Option{"Define as 0", "0"});
+	d->add_option(new Option{"Define as 1", "1"});
 
 	Option *o = d->decide();
 	if (o == nullptr)

@@ -12,6 +12,7 @@
 
 #include "err_hndlr/MissingIncludeHandler.h"
 #include "err_hndlr/UndefinedSymbolHandler.h"
+#include "err_hndlr/UnrosolvedReferenceHandler.h"
 
 namespace cccfg
 {
@@ -30,7 +31,9 @@ ErrorParser::ErrorParser()
 {
 	handlers.push_back(new MissingIncludeHandler);
 	handlers.push_back(new UndefinedSymbolHandler);
+	handlers.push_back(new UnrosolvedReferenceHandler);
 }
+
 ErrorParser::~ErrorParser()
 {
 	auto end = handlers.end();

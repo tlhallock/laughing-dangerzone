@@ -46,7 +46,7 @@ const std::string Config::get_object_directory() const
 
 const std::string Config::get_library_file() const
 {
-	return "/cccfg/static_library.a";
+	return "./cccfg/static_library.a";
 }
 
 const std::string Config::get_link_cmd() const
@@ -59,7 +59,7 @@ static long exe_num;
 const std::string Config::get_exe_name(const std::string& source) const
 {
 	std::stringstream s;
-	s << "./cccfg/output/";
+	s << "./cccfg/bin/";
 	s << source.substr(source.find_last_of("/") + 1, source.find_last_of("."));
 	s << ".";
 	s << exe_num++;
@@ -83,8 +83,9 @@ Config& get_config()
 	return *config;
 }
 
-void Config::add_global_option(const std::string& key, const std::string& value)
+void Config::add_global_compiler_option(const std::string& option)
 {
+	global_compiler_options.insert(option);
 }
 
 const std::set<std::string>& Config::get_source_extensions() const
@@ -121,5 +122,11 @@ const std::set<std::string>& Config::get_header_extensions() const
 	}
 	return exts;
 }
+
+const std::set<std::string>& Config::get_global_compiler_options()
+{
+	return global_compiler_options;
+}
+
 
 }

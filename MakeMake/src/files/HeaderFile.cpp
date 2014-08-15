@@ -28,7 +28,7 @@ void HeaderFile::add_to_fileset(FileSet& fileset)
 std::string HeaderFile::satisfy(const std::string& include)
 {
 	str_ends_with(get_path(), include);
-	auto start = get_path().size() - include.size();
+	int start = (int) get_path().size() - (int) include.size();
 	if (start <= 0)
 	{
 		return "";

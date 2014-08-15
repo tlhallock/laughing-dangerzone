@@ -13,7 +13,7 @@
 namespace cccfg
 {
 
-CompiledFile::CompiledFile(const std::string &path) : File(path) {}
+CompiledFile::CompiledFile(const std::string &path) : File{path} {}
 CompiledFile::~CompiledFile() {}
 
 

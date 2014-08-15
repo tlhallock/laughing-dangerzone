@@ -28,7 +28,7 @@ void Compiler::compile()
 	auto end = get_files().sources().end();
 	for (auto it = get_files().sources().begin(); it != end; ++it)
 	{
-		Cmd cmd(get_config().get_compile_cmd());
+		Cmd cmd = create_compile_cmd();
 
 		SourceFile *file = *it;
 		file->add_to_cmd(COMPILE, cmd);
@@ -60,7 +60,7 @@ void Compiler::compile()
 
 void Compiler::link()
 {
-	Cmd cmd(get_config().get_link_cmd());
+	Cmd cmd = create_archive_cmd();
 
 	auto end = get_files().objects().end();
 	for (auto it = get_files().objects().begin(); it != end; ++it)
@@ -121,7 +121,7 @@ void Compiler::make_exes()
 
 		get_logger().log_line("Making exe from " + object->get_path(), INFO);
 
-		Cmd cmd(get_config().get_compile_cmd());
+		Cmd cmd = create_compile_cmd();
 
 		object->add_to_cmd(MAKE_EXES, cmd);
 		cmd.add_option(get_config().get_library_file());

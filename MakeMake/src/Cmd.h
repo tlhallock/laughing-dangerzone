@@ -43,6 +43,10 @@ private:
 	std::vector<std::string> options;
 };
 
+Cmd create_compile_cmd();
+Cmd create_solink_cmd();
+Cmd create_archive_cmd();
+
 }
 
 #endif /* CMD_H_ */
