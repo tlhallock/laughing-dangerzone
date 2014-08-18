@@ -5,7 +5,9 @@
  *      Author: thallock
  */
 
-#include <err_hndlr/UnrosolvedReferenceHandler.h>
+#include "err_hndlr/UnrosolvedReferenceHandler.h"
+
+#include "files/FileSet.h"
 
 namespace cccfg
 {

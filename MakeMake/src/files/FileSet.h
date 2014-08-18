@@ -48,6 +48,7 @@ public:
 	File *get_file(const std::string &path);
 private:
 	void list_files(const std::string &path, const std::set<std::string> &extensions);
+	bool add_file(File *f);
 
 	std::set<SourceFile*>  m_sources;
 	std::set<HeaderFile*>  m_headers;

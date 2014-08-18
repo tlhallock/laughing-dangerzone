@@ -67,8 +67,11 @@ void CompiledFile::dump_methods()
 
 	RunResult result = run_system_cmd("readelf -Ws "
 			+ get_path()
-			+ " | grep -v UND | grep FUNC | "
-			+ get_config().get_cplusplusfilt()
+			+ " | grep -v UND "
+			+ " | grep FUNC "
+#if 0
+			+ " | " + get_config().get_cplusplusfilt()
+#endif
 			+ " | awk ' { $1=$2=$3=$4=$5=$6=$7=\"\"; print $0} ' | sed 's/^[ \t]*//' | sed 's/[ \t]*$//' ");
 
 	std::stringstream methods_file(result.output);

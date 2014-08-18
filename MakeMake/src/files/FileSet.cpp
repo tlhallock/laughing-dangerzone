@@ -38,6 +38,11 @@ const std::set<LibraryFile*> &FileSet::libs() const
 	return m_libraries;
 }
 
+const std::set<ObjectFile*>& FileSet::objects() const
+{
+	return m_objects;
+}
+
 const std::map<std::string, File *> &FileSet::all_files() const
 {
 	return m_all_files;
@@ -45,51 +50,42 @@ const std::map<std::string, File *> &FileSet::all_files() const
 
 void FileSet::add_source(SourceFile* f)
 {
-	if (f == nullptr)
+	if (!add_file(f))
 	{
 		return;
 	}
 	get_logger().log_line("Found source: " + f->get_path(), DEBUG);
 	m_sources.insert(f);
-	m_all_files.insert(std::pair<std::string, File *>(f->get_path(), f));
 }
 
 void FileSet::add_header(HeaderFile* f)
 {
-	if (f == nullptr)
+	if (!add_file(f))
 	{
 		return;
 	}
 	get_logger().log_line("Found header: " + f->get_path(), DEBUG);
 	m_headers.insert(f);
-	m_all_files.insert(std::pair<std::string, File *>(f->get_path(), f));
 }
 
 void FileSet::add_library(LibraryFile* f)
 {
-	if (f == nullptr)
+	if (!add_file(f))
 	{
 		return;
 	}
 	get_logger().log_line("Found library: " + f->get_path(), DEBUG);
 	m_libraries.insert(f);
-	m_all_files.insert(std::pair<std::string, File *>(f->get_path(), f));
 }
 
 void FileSet::add_object(ObjectFile* object)
 {
-	if (object == nullptr)
+	if (!add_file(object))
 	{
 		return;
 	}
 	get_logger().log_line("Found object file: " + object->get_path(), DEBUG);
 	m_objects.insert(object);
-	m_all_files.insert(std::pair<std::string, ObjectFile *>(object->get_path(), object));
-}
-
-const std::set<ObjectFile*>& FileSet::objects() const
-{
-	return m_objects;
 }
 
 void FileSet::list_files(const std::string &path, const std::set<std::string> &extensions)
@@ -169,5 +165,25 @@ void ensure_directory_for_file(const std::string path)
 	get_logger().log_line("Making directory for " + path, DEBUG);
 	system(cmd);
 }
+
+bool FileSet::add_file(File *file)
+{
+	if (file == nullptr)
+	{
+		return false;
+	}
+
+	// This does not recognize two paths for the same file...
+	if (all_files().find(file->get_path()) != all_files().end())
+	{
+		// already added...
+		return false;
+	}
+
+	m_all_files.insert(std::pair<std::string, File *>(file->get_path(), file));
+
+	return true;
+}
+
 
 }

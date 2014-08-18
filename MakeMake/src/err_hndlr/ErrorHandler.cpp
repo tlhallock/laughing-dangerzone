@@ -7,7 +7,6 @@
 
 #include "err_hndlr/ErrorHandler.h"
 
-
 namespace cccfg
 {
 
